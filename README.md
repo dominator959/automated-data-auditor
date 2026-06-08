@@ -8,6 +8,7 @@ A Python-based automation tool for Data Scientists and Analysts to instantly aud
 - **Logical Duplicate Detection:** Identifies duplicate entries based on specific identity columns (e.g., Name).
 - **Type Inspection:** Reports data types to identify potential conversion issues.
 - **Auto-Export:** Saves every audit as a `.txt` report in the `/reports` folder.
+- **Visual Reporting:** Automatically generates age distribution charts in the /plots folder.
 
 ## 🛠️ Tech Stack
 - **Language:** Python 3.10
@@ -23,6 +24,9 @@ A Python-based automation tool for Data Scientists and Analysts to instantly aud
 1. Activate your environment: `conda activate auditor_env`
 2. Run the script: `python scripts/auditor.py`
 3. Check the `reports/` folder for your results.
+
+## 📊 Sample Output
+![Age Distribution](plots/age_distribution.png)
 
 ---
 **Author:** Muhammad Usman  
