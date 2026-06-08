@@ -15,8 +15,13 @@ def run_audit(file_path):
     # 3. Check for "Empty" (Missing) cells
     missing_values = df.isnull().sum().sum()
     
-    # Check for duplicates specifically in the 'name' column
-    duplicate_count = df.duplicated(subset=['name']).sum()
+    # 4. Check for duplicates safely
+    if 'name' in df.columns:
+        duplicate_count = df.duplicated(subset=['name']).sum()
+    elif 'item' in df.columns:
+        duplicate_count = df.duplicated(subset=['item']).sum()
+    else:
+        duplicate_count = df.duplicated().sum()
     
     # 5. Build a text report
     report = f"""
@@ -46,4 +51,21 @@ def run_audit(file_path):
 
 # This part tells Python to run the function when we start the script
 if __name__ == "__main__":
-    run_audit("data/test_data.csv")
+    # 1. List files available in the data folder
+    print("Files available in /data folder:")
+    files = os.listdir("data")
+    for f in files:
+        if f.endswith(".csv"):
+            print(f"- {f}")
+            
+    # 2. Ask user for input
+    user_file = input("\nEnter the name of the file you want to audit (e.g., test_data.csv): ")
+    
+    # 3. Build the full path
+    full_path = os.path.join("data", user_file)
+    
+    # 4. Check if file exists before running
+    if os.path.exists(full_path):
+        run_audit(full_path)
+    else:
+        print(f"❌ Error: The file '{user_file}' was not found in the /data folder.")

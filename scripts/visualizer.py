@@ -3,24 +3,39 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import os
 
-def create_visuals(file_path):
-    print(f"📊 Generating Visual Report for: {file_path}")
+def create_visuals():
+    # 1. Let the user choose the file
+    print("Available files in /data:")
+    print(os.listdir("data"))
+    user_file = input("Which file to visualize? ")
+    full_path = os.path.join("data", user_file)
+
+    if not os.path.exists(full_path):
+        print("File not found!")
+        return
+
+    df = pd.read_csv(full_path)
     
-    # 1. Load data
-    df = pd.read_csv(file_path)
-    
-    # 2. Create a folder for plots if it doesn't exist
     if not os.path.exists('plots'):
         os.makedirs('plots')
-        
-    # 3. Create a simple Bar Chart of Categories (or in this case, ages)
+
+    # 2. Dynamic Plotting Logic
     plt.figure(figsize=(10, 6))
-    sns.barplot(x='name', y='age', data=df)
-    plt.title('Age Distribution of Users')
     
-    # 4. Save the plot as a professional image
-    plt.savefig('plots/age_distribution.png')
-    print("✅ Success! Chart saved in /plots/age_distribution.png")
+    if 'age' in df.columns:
+        sns.barplot(x='name', y='age', data=df)
+        plt.title(f'Age Analysis: {user_file}')
+        save_path = 'plots/age_plot.png'
+    elif 'price' in df.columns:
+        sns.barplot(x='item', y='price', data=df)
+        plt.title(f'Price Analysis: {user_file}')
+        save_path = 'plots/price_plot.png'
+    else:
+        print("No plottable columns (age/price) found!")
+        return
+
+    plt.savefig(save_path)
+    print(f"✅ Success! Chart saved to {save_path}")
 
 if __name__ == "__main__":
-    create_visuals("data/test_data.csv")
+    create_visuals()

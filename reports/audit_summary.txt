@@ -1,18 +1,18 @@
 
     DATA QUALITY AUDIT REPORT
     =========================
-    File Analyzed: data/test_data.csv
-    Total Rows: 5
+    File Analyzed: data\sales_data.csv
+    Total Rows: 4
     Total Columns: 4
     
     ISSUES FOUND:
     - Missing Values: 2
-    - Duplicate Rows: 1
+    - Duplicate Rows: 0
     
     COLUMN DATA TYPES:
-    id         int64
-name      object
-age      float64
-email     object
+    id            int64
+item         object
+price       float64
+quantity    float64
 dtype: object
     
